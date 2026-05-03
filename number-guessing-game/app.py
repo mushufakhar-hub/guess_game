@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_extras.add_vertical_space import add_vertical_space
+
 import random
 
 # Page config
@@ -68,7 +68,7 @@ with st.sidebar:
     st.write("2. Guess number **1-100**")
     st.write("3. **6 attempts** max")
     st.write("4. Get **hints**: 📉 low / 📈 high")
-    add_vertical_space(2)
+    st.space(20)
     st.balloons() if st.session_state.get('won') else None
 
 # Header
@@ -124,7 +124,7 @@ with st.container():
                 for i, g in enumerate(st.session_state.history, 1):
                     if i == st.session_state.attempts:
                         feedback = "✅ Correct!" if g == st.session_state.num else ("📉 Too Low!" if g < st.session_state.num else "📈 Too High!")
-                        color = "green" if g == st.session_state.num else ("orange" if g > st.session_state.num else "red")
+
                         st.markdown(f"**Attempt {i}/6** | {feedback} | Guess: **{g}**")
                     else:
                         st.write(f"Attempt {i}: {g}")
