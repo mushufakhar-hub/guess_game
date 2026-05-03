@@ -102,21 +102,25 @@ with st.container():
     else:
         col_guess, col_remaining = st.columns(2)
         with col_guess:
-            guess = st.number_input("🎲 Your Guess:", min_value=1, max_value=100, step=1, key="guess")
+            guess = st.number_input("🎲 Your Guess:", min_value=1, max_value=100, step=1, key="guess", label_visibility="collapsed")
         with col_remaining:
             remaining = st.session_state.max_attempts - st.session_state.attempts
             st.metric("⏳ Remaining", f"{remaining}/6")
         
-        if st.button("🔍 Submit Guess", use_container_width=True) and guess:
-            st.session_state.attempts += 1
-            st.session_state.history.append(guess)
-            
-            if guess == st.session_state.num:
-                st.session_state.won = True
-                st.session_state.game_over = True
-            elif st.session_state.attempts >= st.session_state.max_attempts:
-                st.session_state.game_over = True
-            st.rerun()
+        col1, col2, col3 = st.columns([1,2,1])
+        with col2:
+            if st.button("🔍 Submit Guess", use_container_width=True) and guess:
+                st.session_state.attempts += 1
+                st.session_state.history.append(guess)
+                
+                if guess == st.session_state.num:
+                    st.session_state.won = True
+                    st.session_state.game_over = True
+                elif st.session_state.attempts >= st.session_state.max_attempts:
+                    st.session_state.game_over = True
+                st.rerun()
+        
+        st.caption("💡 **Tip**: Press Enter after typing your guess or click Submit!")
         
         # History
         if st.session_state.history:
